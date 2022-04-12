@@ -2,6 +2,7 @@ package com.mathewtri.recipeZ.repository;
 
 import com.mathewtri.recipeZ.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -39,4 +40,9 @@ public class UserRepository implements IUserRepository{
         return (User) redisTemplate.opsForHash().get(KEY, userId);
     }
 
+    @Override
+    public void deleteById(String userId) {
+        HashOperations hashOp = redisTemplate.opsForHash();
+        hashOp.delete(KEY, userId);
+    }
 }

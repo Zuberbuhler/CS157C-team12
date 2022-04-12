@@ -2,6 +2,7 @@ package com.mathewtri.recipeZ.controller;
 
 import com.mathewtri.recipeZ.model.User;
 import com.mathewtri.recipeZ.service.IUserService;
+import com.mathewtri.recipeZ.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }else{
             return ResponseEntity.ok(user);
+        }
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public String delete(@PathVariable String userId)
+    {
+        User user = userService.fetchUserById(userId);
+        if(user == null){
+            return "Failed to Delete User: id not found";
+        }else{
+            userService.deleteUser(userId);
+            return "Deleted Student with id " + userId;
         }
     }
 }
