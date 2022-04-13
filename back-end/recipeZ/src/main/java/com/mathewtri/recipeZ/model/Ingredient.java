@@ -14,7 +14,6 @@ public class Ingredient implements Serializable {
     @Id
     @Indexed
     private String id = UUID.randomUUID().toString();
-    private String userId;
     private String ingredientName;
     private String expiration;
     private int par;
