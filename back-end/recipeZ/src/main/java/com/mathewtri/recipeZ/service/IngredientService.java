@@ -1,6 +1,7 @@
 package com.mathewtri.recipeZ.service;
 
 import com.mathewtri.recipeZ.model.Ingredient;
+import com.mathewtri.recipeZ.model.User;
 import com.mathewtri.recipeZ.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,17 @@ public class IngredientService implements IIngredientService{
     }
 
     @Override
-    public void createIngredient(String userId, Ingredient ingredient) {
-        ingredientRepository.createIngredient(userId, ingredient);
+    public boolean createIngredient(String userId, Ingredient ingredient) {
+
+        List<Ingredient> ingredients = fetchIngredients(userId);
+        boolean isExisted = ingredients.stream()
+                .anyMatch(currentIngredient -> currentIngredient.getIngredientName().equals(ingredient.getIngredientName()));
+        if (isExisted) {
+            System.out.println("Ingredient Already Exists.");
+            return false;
+        }
+
+        return ingredientRepository.createIngredient(userId, ingredient);
     }
 
     @Override

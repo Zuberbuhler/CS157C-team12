@@ -21,10 +21,10 @@ public class RecipeRepository implements IRecipeRepository{
     }
 
     @Override
-    public boolean createRecipe(Recipe recipe) {
+    public boolean createRecipe(String userId, Recipe recipe) {
         try
         {
-            redisTemplate.opsForHash().put(KEY + recipe.getUserId(), recipe.getId(), recipe);
+            redisTemplate.opsForHash().put(KEY + userId, recipe.getId(), recipe);
             return true;
         }
         catch (Exception e)
@@ -49,4 +49,10 @@ public class RecipeRepository implements IRecipeRepository{
         HashOperations hashOp = redisTemplate.opsForHash();
         hashOp.delete(KEY + userId, recipeId);
     }
+
+    @Override
+    public void updateRecipe(String userId, Recipe recipe) {
+        createRecipe(userId, recipe);
+    }
+
 }

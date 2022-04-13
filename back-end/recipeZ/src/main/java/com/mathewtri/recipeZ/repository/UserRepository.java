@@ -21,10 +21,13 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public boolean createUser(User user) {
-        try{
+        try
+        {
             redisTemplate.opsForHash().put(KEY, user.getId(), user);
             return true;
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
             return false;
         }
