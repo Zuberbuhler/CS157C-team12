@@ -21,14 +21,14 @@ public class RecipeService implements IRecipeService {
     }
 
     @Override
-    public boolean createRecipe(Recipe recipe){
-        List<Recipe> recipes = recipeRepository.fetchRecipes(recipe.getUserId());
+    public boolean createRecipe(String userId, Recipe recipe){
+        List<Recipe> recipes = recipeRepository.fetchRecipes(userId);
         boolean isExisted = recipes.stream()
                 .anyMatch(currentRecipe -> currentRecipe.getRecipe_name().equals(recipe.getRecipe_name()));
         if (isExisted) {
             return false;
         }
-        return recipeRepository.createRecipe(recipe);
+        return recipeRepository.createRecipe(userId, recipe);
     }
 
     @Override
@@ -41,9 +41,14 @@ public class RecipeService implements IRecipeService {
         return recipeRepository.fetchRecipeById(userId, recipeId);
     }
 
+    @Override
     public void deleteRecipeById(String userId, String recipeId)
     {
         recipeRepository.deleteRecipeById(userId, recipeId);
     }
 
+    @Override
+    public void updateRecipe(String userId, Recipe recipe) {
+        recipeRepository.updateRecipe(userId, recipe);
+    }
 }

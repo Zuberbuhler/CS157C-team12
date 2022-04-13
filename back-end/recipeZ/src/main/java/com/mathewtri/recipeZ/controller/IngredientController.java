@@ -30,12 +30,16 @@ public class IngredientController {
 
     @PostMapping("/{userId}/ingredients")
     public ResponseEntity<Void> createIngredient(@PathVariable String userId, @RequestBody Ingredient ingredient){
-        ingredientService.createIngredient(userId, ingredient);
-        return ResponseEntity.ok().build();
+        if( ingredientService.createIngredient(userId, ingredient))
+        {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     @GetMapping("/{userId}/ingredients")
     public ResponseEntity<List<Ingredient>> fetchIngredients(@PathVariable String userId){
+        System.out.println("Fetching Ingredients");
         List<Ingredient> ingredients = ingredientService.fetchIngredients(userId);
         return ResponseEntity.ok(ingredients);
     }
@@ -58,6 +62,7 @@ public class IngredientController {
 
     @PutMapping("/{userId}/ingredients")
     public ResponseEntity<Void> updateIngredient(@PathVariable String userId, @RequestBody Ingredient ingredient){
+        System.out.println("Updating Ingredient for user id " + userId + " with ingredient id " + ingredient.getId());
         ingredientService.updateIngredient(userId, ingredient);
         return ResponseEntity.ok().build();
     }

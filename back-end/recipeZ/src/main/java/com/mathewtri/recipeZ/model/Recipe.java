@@ -16,7 +16,6 @@ public class Recipe implements Serializable {
     @Id
     @Indexed
     private String id = UUID.randomUUID().toString();
-    private String userId;
     private String recipe_name;
     private String recipe_image;
     private String recipe_content;

@@ -19,12 +19,16 @@ public class IngredientRepository implements IIngredientRepository{
     }
 
     @Override
-    public void createIngredient(String userId, Ingredient ingredient) {
+    public boolean createIngredient(String userId, Ingredient ingredient) {
         try{
             redisTemplate.opsForHash().put(KEY + userId, ingredient.getId(), ingredient);
-        }catch (Exception e){
+            return true;
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
