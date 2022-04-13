@@ -10,5 +10,5 @@ public interface IUserService {
     List<User> fetchUsers();
     User fetchUserById(String userId);
     User fetchUserByEmail(String email);
-
+    public void deleteUser(String userId);
 }

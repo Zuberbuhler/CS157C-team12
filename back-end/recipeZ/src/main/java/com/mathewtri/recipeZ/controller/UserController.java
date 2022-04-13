@@ -2,6 +2,7 @@ package com.mathewtri.recipeZ.controller;
 
 import com.mathewtri.recipeZ.model.User;
 import com.mathewtri.recipeZ.service.IUserService;
+import com.mathewtri.recipeZ.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ public class UserController {
         }
     }
 
+
     @GetMapping("/users")
     public ResponseEntity<List<User>> fetchUsers(){
         List<User> users = userService.fetchUsers();
@@ -40,9 +42,12 @@ public class UserController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<User> fetchUserById(@PathVariable String userId){
         User user = userService.fetchUserById(userId);
-        if(user == null){
+        if(user == null)
+        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else{
+        }
+        else
+        {
             return ResponseEntity.ok(user);
         }
     }
@@ -50,10 +55,28 @@ public class UserController {
     @GetMapping("/users/search")
     public ResponseEntity<User> fetchUserByEmail(@RequestParam String email){
         User user = userService.fetchUserByEmail(email);
-        if(user == null){
+        if(user == null)
+        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else{
+        }
+        else
+        {
             return ResponseEntity.ok(user);
+        }
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public String delete(@PathVariable String userId)
+    {
+        User user = userService.fetchUserById(userId);
+        if(user == null)
+        {
+            return "Failed to Delete User: id not found";
+        }
+        else
+        {
+            userService.deleteUser(userId);
+            return "Deleted Student with id " + userId;
         }
     }
 }

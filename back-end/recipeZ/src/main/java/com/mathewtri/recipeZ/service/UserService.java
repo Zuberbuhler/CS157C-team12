@@ -42,9 +42,14 @@ public class UserService implements IUserService {
     @Override
     public User fetchUserByEmail(String email) {
         List<User> users = fetchUsers();
+
         return users.stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findAny()
                 .orElse(null);
+    }
+    public void deleteUser(String userId)
+    {
+        userRepository.deleteById(userId);
     }
 }
