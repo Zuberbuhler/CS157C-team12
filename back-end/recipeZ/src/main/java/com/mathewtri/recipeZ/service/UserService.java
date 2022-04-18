@@ -2,20 +2,24 @@ package com.mathewtri.recipeZ.service;
 
 import com.mathewtri.recipeZ.model.User;
 import com.mathewtri.recipeZ.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService {
+@RequiredArgsConstructor
+public class UserService implements IUserService, UserDetailsService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean createUser(User user) {
@@ -26,6 +30,7 @@ public class UserService implements IUserService {
         if (isExisted) {
             return false;
         }
+         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.createUser(user);
     }
 
@@ -51,5 +56,13 @@ public class UserService implements IUserService {
     public void deleteUser(String userId)
     {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = fetchUserByEmail(username);
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 }
