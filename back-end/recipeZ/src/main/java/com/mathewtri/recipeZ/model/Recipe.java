@@ -21,5 +21,4 @@ public class Recipe implements Serializable {
     private String recipe_content;
     private List<Ingredient> ingredientList;
 
-
 }
