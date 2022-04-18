@@ -11,7 +11,6 @@ import java.util.UUID;
 @Data
 @RedisHash("User")
 public class User implements Serializable {
-
     @Id
     @Indexed
     private String id = UUID.randomUUID().toString();
@@ -19,5 +18,4 @@ public class User implements Serializable {
     @Indexed
     private String email;
     private String password;
-
 }
