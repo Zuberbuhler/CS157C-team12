@@ -1,47 +1,28 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { 
+  useNavigate,
+} from "react-router-dom";
 
-const axios = require('axios');
+import { useState } from 'react'
 
-const flag = false;
+const axios = require('axios').default;
 
+const REGISTER_URL = 'http://localhost:8080/api/users';
 
 const Homepage = () => {
+  let navigate = useNavigate();
 
-  const [users, setUsers] = useState([]);
+  const [postResponse, setPostResponse] = useState('Test');
 
-  useEffect(() => {
-    const getUsers = async () => {
-
-      const usersFromServer = await fetchUsers();
-      console.log("users:");
-      console.log(usersFromServer);
-      setUsers(usersFromServer);
-    }
-    getUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    const res = await fetch('http://localhost:8080/api/users')
-    const data = await res.json();
-
-    return data
+  const app = () => {
+    navigate('/');
   }
-
-    
-  
 
   return (
     <div>
       <h1>Homepage</h1>
-      <ul>
-        
-        {
-          users.map((user)=> (
-            <li key={user.id}>Username: {user.username}, Password: {user.password}, Email: {user.email}</li>
-        ))
-        }
-      </ul>
+      <p>{postResponse}</p>
+      <button class="button" onClick={app}>Logout</button>
     </div>
   )
 }

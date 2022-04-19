@@ -1,9 +1,12 @@
-import Homepage from "./components/Homepage"
+import SignIn from "./components/SignIn";
 
 function App() {
+
   return (
     <div className="App">
-      <Homepage/>
+      <nav>
+        <SignIn/>
+      </nav>
     </div>
   );
 }

@@ -16,12 +16,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Serializable {
-
     @Id
     @Indexed
     private String id = UUID.randomUUID().toString();
     @Indexed
     private String email;
     private String password;
-
 }
