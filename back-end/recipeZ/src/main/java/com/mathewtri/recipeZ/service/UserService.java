@@ -26,7 +26,7 @@ public class UserService implements IUserService, UserDetailsService {
         // check if email is unique
         List<User> users = fetchUsers();
         boolean isExisted = users.stream()
-                .anyMatch(currentUser -> currentUser.getUsername().equals(user.getUsername()) || currentUser.getEmail().equals(user.getEmail()));
+                .anyMatch(currentUser -> currentUser.getEmail().equals(user.getEmail()));
         if (isExisted) {
             return false;
         }

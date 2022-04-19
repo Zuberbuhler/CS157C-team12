@@ -1,24 +1,11 @@
-import Homepage from "./components/SignIn"
-import {   
-  useNavigate,
-} from "react-router-dom";
+import SignIn from "./components/SignIn";
 
 function App() {
-  let navigate = useNavigate();
-
-  const login = () => {
-    navigate('/SignIn');
-  }
-
-  const register = () => {
-    navigate('/Register');
-  }
 
   return (
     <div className="App">
       <nav>
-        <button class="button" onClick={login}>Login</button>
-        <button class="button" onClick={register}>Register</button>
+        <SignIn/>
       </nav>
     </div>
   );
