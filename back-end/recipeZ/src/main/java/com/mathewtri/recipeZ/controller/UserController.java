@@ -30,13 +30,28 @@ public class UserController {
     }
 
     // signup
-    @PostMapping("/users")
+    @PostMapping("/users/create")
     public ResponseEntity<Boolean> createUser(@RequestBody User user){
         boolean success = userService.createUser(user);
         if(success){
             return ResponseEntity.ok(true);
         }else{
             return ResponseEntity.ok(false);
+        }
+    }
+
+    // login
+    @PostMapping("/users")
+    public ResponseEntity<User> loginUser(@RequestBody User user){
+        User fetchedUser = userService.fetchUserByEmailAndPassword(user.getEmail(), user.getPassword());
+        System.out.println(fetchedUser);
+        if(fetchedUser == null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else
+        {
+            return ResponseEntity.ok(fetchedUser);
         }
     }
 

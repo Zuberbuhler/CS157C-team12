@@ -10,5 +10,6 @@ public interface IUserService {
     List<User> fetchUsers();
     User fetchUserById(String userId);
     User fetchUserByEmail(String email);
+    User fetchUserByEmailAndPassword(String email, String password);
     public void deleteUser(String userId);
 }
