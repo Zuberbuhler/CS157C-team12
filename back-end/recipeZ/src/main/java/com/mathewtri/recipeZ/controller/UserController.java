@@ -36,7 +36,7 @@ public class UserController {
         if (success) {
             return ResponseEntity.ok(true);
         } else {
-            return ResponseEntity.ok(false);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 

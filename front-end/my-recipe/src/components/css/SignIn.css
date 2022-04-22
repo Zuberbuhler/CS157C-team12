@@ -17,7 +17,7 @@ body {
     background-color: dodgerblue;
 }
 
-#sign-in-form {
+.sign-in-form {
   display: flex;
   flex-direction: column;
   justify-content: center;

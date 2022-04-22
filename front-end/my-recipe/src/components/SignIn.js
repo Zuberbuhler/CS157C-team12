@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./css/SignIn.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -91,7 +91,7 @@ const SignIn = () => {
    };
 
    return (
-      <div id="sign-in-form">
+      <div className="sign-in-form">
          <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                {errMsg}
@@ -165,7 +165,8 @@ const SignIn = () => {
                Don't have an Account?
                <br />
                <span className="line">
-                  <a href="/Register">Register</a>
+                  {/* <a href="/Register">Register</a> */}
+                  <Link to="/register">Register</Link>
                </span>
             </p>
          </section>
