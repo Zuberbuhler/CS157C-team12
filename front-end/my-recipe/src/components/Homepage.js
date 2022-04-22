@@ -1,30 +1,38 @@
-import React from 'react'
-import { 
-  useNavigate,
-} from "react-router-dom";
+import React from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+const axios = require("axios").default;
 
-import { useState } from 'react'
-
-const axios = require('axios').default;
-
-const REGISTER_URL = 'http://localhost:8080/api/users';
+const REGISTER_URL = "http://localhost:8080/api/users";
 
 const Homepage = () => {
-  let navigate = useNavigate();
+   let navigate = useNavigate();
 
-  const [postResponse, setPostResponse] = useState('Test');
+   const [postResponse, setPostResponse] = useState("Test");
 
-  const app = () => {
-    navigate('/');
-  }
+   useEffect(() => {});
 
-  return (
-    <div>
-      <h1>Homepage</h1>
-      <p>{postResponse}</p>
-      <button class="button" onClick={app}>Logout</button>
-    </div>
-  )
-}
+   const logout = () => {
+      navigate("/");
+      localStorage.clear();
+   };
 
-export default Homepage
+   return (
+      <div>
+         <ul>
+            <Link to="/ingredient">
+               <li>Ingredient</li>
+            </Link>
+            <Link to="/recipe">
+               <li>Recipe</li>
+            </Link>
+         </ul>
+         <p>{postResponse}</p>
+         <button className="button" onClick={logout}>
+            Logout
+         </button>
+      </div>
+   );
+};
+
+export default Homepage;

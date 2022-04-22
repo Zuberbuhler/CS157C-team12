@@ -1,9 +1,7 @@
-package com.mathewtri.recipeZ.service;
+package com.mathewtri.recipeZ.service.recipe;
 
 import com.mathewtri.recipeZ.model.Recipe;
-import com.mathewtri.recipeZ.model.User;
-import com.mathewtri.recipeZ.repository.RecipeRepository;
-import com.mathewtri.recipeZ.repository.UserRepository;
+import com.mathewtri.recipeZ.repository.recipe.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

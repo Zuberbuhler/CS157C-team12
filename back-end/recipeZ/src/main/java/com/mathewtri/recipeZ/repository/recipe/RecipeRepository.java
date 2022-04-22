@@ -1,7 +1,6 @@
-package com.mathewtri.recipeZ.repository;
+package com.mathewtri.recipeZ.repository.recipe;
 
 import com.mathewtri.recipeZ.model.Recipe;
-import com.mathewtri.recipeZ.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;

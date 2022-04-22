@@ -1,10 +1,7 @@
 package com.mathewtri.recipeZ.controller;
 
-import com.mathewtri.recipeZ.model.Ingredient;
 import com.mathewtri.recipeZ.model.Recipe;
-import com.mathewtri.recipeZ.model.User;
-import com.mathewtri.recipeZ.service.IRecipeService;
-import com.mathewtri.recipeZ.service.IUserService;
+import com.mathewtri.recipeZ.service.recipe.IRecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
