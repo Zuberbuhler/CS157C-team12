@@ -1,4 +1,4 @@
-package com.mathewtri.recipeZ.service;
+package com.mathewtri.recipeZ.service.ingredient;
 
 import com.mathewtri.recipeZ.model.Ingredient;
 

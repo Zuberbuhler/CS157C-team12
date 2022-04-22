@@ -1,4 +1,4 @@
-package com.mathewtri.recipeZ.repository;
+package com.mathewtri.recipeZ.repository.user;
 
 import com.mathewtri.recipeZ.model.User;
 

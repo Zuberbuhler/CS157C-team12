@@ -1,7 +1,7 @@
-package com.mathewtri.recipeZ.service;
+package com.mathewtri.recipeZ.service.user;
 
 import com.mathewtri.recipeZ.model.User;
-import com.mathewtri.recipeZ.repository.UserRepository;
+import com.mathewtri.recipeZ.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

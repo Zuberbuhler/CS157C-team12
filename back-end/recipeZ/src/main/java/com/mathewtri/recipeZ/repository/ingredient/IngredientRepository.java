@@ -1,4 +1,4 @@
-package com.mathewtri.recipeZ.repository;
+package com.mathewtri.recipeZ.repository.ingredient;
 
 import com.mathewtri.recipeZ.model.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
