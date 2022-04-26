@@ -18,8 +18,12 @@ import java.util.UUID;
 public class User implements Serializable {
     @Id
     @Indexed
-    private String id = UUID.randomUUID().toString();
+    private String id;
     @Indexed
     private String email;
     private String password;
+
+    public User(String email, String password) {
+        this(UUID.randomUUID().toString(), email, password);
+    }
 }

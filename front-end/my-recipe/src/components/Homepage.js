@@ -26,6 +26,9 @@ const Homepage = () => {
             <Link to="/recipe">
                <li>Recipe</li>
             </Link>
+            <Link to="/ingredients">
+               <li>Ingredients</li>
+            </Link>
          </ul>
          <p>{postResponse}</p>
          <button className="button" onClick={logout}>

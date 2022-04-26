@@ -20,6 +20,7 @@ public class IngredientRepository implements IIngredientRepository{
 
     @Override
     public boolean createIngredient(String userId, Ingredient ingredient) {
+        System.out.println(ingredient);
         try{
             redisTemplate.opsForHash().put(KEY + userId, ingredient.getId(), ingredient);
             return true;

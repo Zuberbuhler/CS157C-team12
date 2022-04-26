@@ -1,7 +1,13 @@
 package com.mathewtri.recipeZ;
 
+import com.mathewtri.recipeZ.model.Ingredient;
+import com.mathewtri.recipeZ.model.User;
+import com.mathewtri.recipeZ.service.ingredient.IngredientService;
+import com.mathewtri.recipeZ.service.user.UserService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class RecipeZApplication {
@@ -10,14 +16,30 @@ public class RecipeZApplication {
 		SpringApplication.run(RecipeZApplication.class, args);
 	}
 
-//	@Bean
-//	CommandLineRunner run(UserService userService){
-//		return args -> {
-//
-//			userService.createUser(new User(null, "trido", "trido@gmail.com", "1234"));
-//			userService.createUser(new User(null, "mathew", "mathew@microsoft.com", "1234"));
-//			userService.createUser(new User(null, "john", "john@amazon.com", "1234"));
-//
-//		};
-//	}
+	@Bean
+	CommandLineRunner run(UserService userService, IngredientService ingredientService){
+		return args -> {
+			// create users
+			User user1 = new User("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", "trido@gmail.com", "Haha1234@");
+			User user2 = new User("56bf2944-b674-43d6-88aa-b1b453c9556e", "mathew@microsoft.com", "Haha1234");
+
+			userService.createUser(user1);
+			userService.createUser(user2);
+
+			// create ingredients
+			Ingredient ingredient1 = new Ingredient("3b20bfe9-3b5d-4caf-8b94-901085b197ab", "Pepper", "03/11/2023", 1, 4, "pound");
+			Ingredient ingredient2 = new Ingredient("d90e206d-3271-4de8-8e22-7b5b317e034d", "Tomato", "07/09/2022", 7, 7, "pound");
+			Ingredient ingredient3 = new Ingredient("8a6966d2-e535-4330-b9e8-a8a56dba019a", "Salt", "12/06/2021", 7, 8, "ml");
+			Ingredient ingredient4 = new Ingredient("d4d76adc-c0f7-4df3-a50a-eb6f231aed1f", "Orion", "12/01/2021", 10, 12, "each");
+			Ingredient ingredient5 = new Ingredient("ef794469-74df-4227-8db1-14e755eb4618", "Chicken", "08/05/2021", 1, 12, "each");
+			Ingredient ingredient6 = new Ingredient("a8a90cec-6fda-4410-ba71-eaa7c3436c5d", "Pork", "02/01/2019", 2, 3, "pound");
+
+			ingredientService.createIngredient("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", ingredient1);
+			ingredientService.createIngredient("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", ingredient2);
+			ingredientService.createIngredient("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", ingredient3);
+			ingredientService.createIngredient("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", ingredient4);
+			ingredientService.createIngredient("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", ingredient5);
+			ingredientService.createIngredient("56bf2944-b674-43d6-88aa-b1b453c9556e", ingredient6);
+		};
+	}
 }
