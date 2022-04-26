@@ -14,7 +14,6 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: dodgerblue;
 }
 
 .sign-in-form {
@@ -47,7 +46,7 @@ form {
 }
 
 a, a:visited {
-    color: #fff;
+    /* color: #fff; */
 }
 
 input[type="text"],

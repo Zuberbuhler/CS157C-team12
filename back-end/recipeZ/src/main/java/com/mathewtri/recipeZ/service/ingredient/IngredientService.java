@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class IngredientService implements IIngredientService{
@@ -19,7 +20,6 @@ public class IngredientService implements IIngredientService{
 
     @Override
     public boolean createIngredient(String userId, Ingredient ingredient) {
-
         List<Ingredient> ingredients = fetchIngredients(userId);
         boolean isExisted = ingredients.stream()
                 .anyMatch(currentIngredient -> currentIngredient.getIngredientName().equals(ingredient.getIngredientName()));
@@ -27,6 +27,7 @@ public class IngredientService implements IIngredientService{
             System.out.println("Ingredient Already Exists.");
             return false;
         }
+        ingredient.setId(UUID.randomUUID().toString());
 
         return ingredientRepository.createIngredient(userId, ingredient);
     }

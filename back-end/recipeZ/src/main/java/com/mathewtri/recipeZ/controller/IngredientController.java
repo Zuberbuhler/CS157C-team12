@@ -39,7 +39,6 @@ public class IngredientController {
 
     @GetMapping("/{userId}/ingredients")
     public ResponseEntity<List<Ingredient>> fetchIngredients(@PathVariable String userId){
-        System.out.println("Fetching Ingredients");
         List<Ingredient> ingredients = ingredientService.fetchIngredients(userId);
         return ResponseEntity.ok(ingredients);
     }

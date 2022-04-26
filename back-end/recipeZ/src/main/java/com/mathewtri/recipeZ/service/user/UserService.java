@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,12 @@ public class UserService implements IUserService {
     public boolean createUser(User user) {
         // check if email is unique
         List<User> users = fetchUsers();
-        boolean isExisted = users.stream()
-                .anyMatch(currentUser -> currentUser.getEmail().equals(user.getEmail()));
+        boolean isExisted = users.stream().anyMatch(currentUser -> currentUser.getEmail().equals(user.getEmail()));
         if (isExisted) {
             return false;
+        }
+        if (user.getId() == null) {
+            user.setId(UUID.randomUUID().toString());
         }
         return userRepository.createUser(user);
     }
@@ -39,24 +42,17 @@ public class UserService implements IUserService {
     public User fetchUserByEmail(String email) {
         List<User> users = fetchUsers();
 
-        return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findAny()
-                .orElse(null);
+        return users.stream().filter(user -> user.getEmail().equals(email)).findAny().orElse(null);
     }
 
     @Override
     public User fetchUserByEmailAndPassword(String email, String password) {
         List<User> users = fetchUsers();
 
-        return users.stream()
-                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
-                .findAny()
-                .orElse(null);
+        return users.stream().filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password)).findAny().orElse(null);
     }
 
-    public void deleteUser(String userId)
-    {
+    public void deleteUser(String userId) {
         userRepository.deleteById(userId);
     }
 

@@ -1,7 +1,8 @@
 import SignIn from "./components/SignIn";
 import Register from "./components/Register";
 import Homepage from "./components/Homepage";
-import CreateIngredient from "./components/CreateIngredient";
+import IngredientCreate from "./components/Ingredient/IngredientCreate";
+import IngredientList from "./components/Ingredient/IngredientList";
 import CreateRecipe from "./components/CreateRecipe";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -20,13 +21,16 @@ function App() {
    }, [setUser]);
 
    return (
-      <Routes>
-         <Route path="/" element={!user ? <SignIn /> : <Homepage />} />
-         <Route path="/register" element={!user ? <Register /> : <Homepage />} />
-         <Route path="/ingredient" element={<CreateIngredient />} />
-         <Route path="/recipe" element={<CreateRecipe />} />
-         <Route path="/homepage" element={<Homepage />} />
-      </Routes>
+      <div className="container">
+         <Routes>
+            <Route path="/" element={!user ? <SignIn /> : <Homepage />} />
+            <Route path="/register" element={!user ? <Register /> : <Homepage />} />
+            <Route path="/ingredients" element={<IngredientList />} />
+            <Route path="/ingredients/create" element={<IngredientCreate />} />
+            <Route path="/recipe" element={<CreateRecipe />} />
+            <Route path="/homepage" element={<Homepage />} />
+         </Routes>
+      </div>
    );
 }
 
