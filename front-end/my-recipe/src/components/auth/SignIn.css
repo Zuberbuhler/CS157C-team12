@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -46,7 +46,7 @@ form {
 }
 
 a, a:visited {
-    /* color: #fff; */
+    
 }
 
 input[type="text"],
@@ -67,8 +67,13 @@ button {
 
 button {
   padding: 0.5rem;
+} */
+.myform{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;

@@ -1,23 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Col, Container } from "react-bootstrap";
 import axios from "axios";
 
 import "./IngredientList.css";
 import { Link } from "react-router-dom";
 
+import * as Yup from "yup";
+import { useFormik } from "formik";
+
 export default function IngredientList() {
    const URL = "http://localhost:8080/api/users/";
    const [ingredients, setIngredients] = useState([]);
    const [ingredient, setIngredient] = useState({});
    const [modalShow, setModalShow] = useState(false);
-
-   // Click row -> index -> ingredients[index]
-
-   const ingredientNameRef = useRef();
-   const expirationRef = useRef();
-   const quantityRef = useRef();
-   const parRef = useRef();
-   const quantityTypeRef = useRef();
 
    useEffect(() => {
       loadIngredients();
@@ -39,7 +34,6 @@ export default function IngredientList() {
       const ingredientId = ingredient.id;
       const result = await axios.get(`${URL}${userId}/ingredients/${ingredientId}`);
       setIngredient(result.data);
-      console.log(result.data);
       setModalShow(true);
    };
 
@@ -54,21 +48,11 @@ export default function IngredientList() {
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user["userId"];
       const result = await axios.delete(`${URL}${userId}/ingredients/${ingredientId}`);
-      setIngredient(null);
+      setModalShow(false);
    };
 
-   const handleUpdateIngredient = (e) => {
-      e.preventDefault();
-      const newIngredient = {
-         ...ingredient,
-         ingredientName: ingredientNameRef.current.value,
-         quantity: quantityRef.current.value,
-         quantityType: quantityTypeRef.current.value,
-         expiration: expirationRef.current.value,
-         par: parRef.current.value,
-      };
-
-      const _ingredients = JSON.parse(JSON.stringify(ingredients));
+   const handleUpdateIngredient = (newIngredient) => {
+      const _ingredients = JSON.parse(JSON.stringify(ingredients)); // deep copy of ingredient
       let ingredientIdx = 0;
       for (let i = 0; i < _ingredients.length; i++) {
          if (newIngredient.id === _ingredients[i].id) {
@@ -77,10 +61,7 @@ export default function IngredientList() {
             break;
          }
       }
-
-      // _ingredients.push(newIngredient);
       setIngredients(_ingredients);
-      console.log(newIngredient);
       updateIngredient(_ingredients[ingredientIdx]);
    };
 
@@ -102,7 +83,6 @@ export default function IngredientList() {
    };
 
    const handleEachItemClick = (ingredient) => {
-      // console.log(ingredient);
       loadIngredient(ingredient);
    };
 
@@ -112,113 +92,161 @@ export default function IngredientList() {
          (ingredient) => ingredient.id !== ingredientId
       );
       setIngredients(filteredIngredients);
-
-      // calling api
       deleteIngredient(ingredientId);
    };
 
    function MyVerticallyCenteredModal(props) {
+      const { ingredient } = props;
+      const formik = useFormik({
+         initialValues: {
+            id: ingredient.id,
+            ingredientName: ingredient.ingredientName,
+            expiration: ingredient.expiration,
+            par: ingredient.par,
+            quantity: ingredient.quantity,
+            quantityType: ingredient.quantityType,
+         },
+         validationSchema: Yup.object({
+            ingredientName: Yup.string().required("*"),
+            expiration: Yup.string().required("*"),
+            par: Yup.number().min(1, " > 0").required("*"),
+            quantity: Yup.number().min(1, " > 0").required("*"),
+            quantityType: Yup.string().required("*"),
+         }),
+         onSubmit: (ingredient) => {
+            handleUpdateIngredient(ingredient);
+         },
+      });
+      
       return (
-         ingredient && (
-            <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-               <Modal.Header closeButton>
-                  <Modal.Title id="contained-modal-title-vcenter">Ingredient</Modal.Title>
-               </Modal.Header>
-               <Modal.Body className="show-grid">
-                  <Container>
-                     <Form onSubmit={handleUpdateIngredient}>
-                        <Row>
-                           <Col xs={5} md={8}>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                 <Form.Label>Ingredient Name</Form.Label>
-                                 <Form.Control
-                                    name="ingredientName"
-                                    type="text"
-                                    autoFocus
-                                    defaultValue={ingredient.ingredientName}
-                                    ref={ingredientNameRef}
-                                 />
-                              </Form.Group>
-                           </Col>
-                        </Row>
-                        <Row>
-                           <Col xs={5} md={8}>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                 <Form.Label>Expiration</Form.Label>
-                                 <Form.Control
-                                    name="expiration"
-                                    type="text"
-                                    defaultValue={ingredient.expiration}
-                                    readOnly
-                                    ref={expirationRef}
-                                 />
-                              </Form.Group>
-                           </Col>
-                        </Row>
+         <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header closeButton>
+               <Modal.Title id="contained-modal-title-vcenter">Ingredient</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="show-grid">
+               <Container>
+                  <Form onSubmit={formik.handleSubmit}>
+                     <Row>
+                        <Col xs={5} md={8}>
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>
+                                 Ingredient Name
+                                 {formik.touched.ingredientName && formik.errors.ingredientName ? (
+                                    <span className="star-error">
+                                       {formik.errors.ingredientName}
+                                    </span>
+                                 ) : null}
+                              </Form.Label>
+                              <Form.Control
+                                 type="text"
+                                 value={formik.values.ingredientName}
+                                 name="ingredientName"
+                                 onChange={formik.handleChange}
+                                 onBlur={formik.handleBlur}
+                              />
+                           </Form.Group>
+                        </Col>
+                     </Row>
+                     <Row>
+                        <Col xs={5} md={8}>
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>
+                                 Expiration
+                                 {formik.touched.expiration && formik.errors.expiration ? (
+                                    <span className="star-error">{formik.errors.expiration}</span>
+                                 ) : null}
+                              </Form.Label>
+                              <Form.Control
+                                 name="expiration"
+                                 type="text"
+                                 value={formik.values.expiration}
+                                 readOnly
+                                 onChange={formik.handleChange}
+                                 onBlur={formik.handleBlur}
+                              />
+                           </Form.Group>
+                        </Col>
+                     </Row>
 
-                        <Row>
-                           <Col xs={6} md={4}>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                 <Form.Label>Par</Form.Label>
-                                 <Form.Control
-                                    name="par"
-                                    type="number"
-                                    min={0}
-                                    defaultValue={ingredient.par}
-                                    ref={parRef}
-                                 />
-                              </Form.Group>
-                           </Col>
+                     <Row>
+                        <Col xs={6} md={4}>
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>
+                                 Par
+                                 {formik.touched.par && formik.errors.par ? (
+                                    <span className="star-error"> {formik.errors.par}</span>
+                                 ) : null}
+                              </Form.Label>
+                              <Form.Control
+                                 name="par"
+                                 type="number"
+                                 min={1}
+                                 value={formik.values.par}
+                                 onChange={formik.handleChange}
+                                 onBlur={formik.handleBlur}
+                              />
+                           </Form.Group>
+                        </Col>
 
-                           <Col xs={6} md={4}>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                 <Form.Label>Quantity</Form.Label>
-                                 <Form.Control
-                                    name="quantity"
-                                    type="number"
-                                    min={0}
-                                    defaultValue={ingredient.quantity}
-                                    ref={quantityRef}
-                                 />
-                              </Form.Group>
-                           </Col>
+                        <Col xs={6} md={4}>
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>
+                                 Quantity
+                                 {formik.touched.quantity && formik.errors.quantity ? (
+                                    <span className="star-error">{formik.errors.quantity}</span>
+                                 ) : null}
+                              </Form.Label>
+                              <Form.Control
+                                 name="quantity"
+                                 type="number"
+                                 min={1}
+                                 value={formik.values.quantity}
+                                 onChange={formik.handleChange}
+                                 onBlur={formik.handleBlur}
+                              />
+                           </Form.Group>
+                        </Col>
 
-                           <Col xs={6} md={4}>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                 <Form.Label>Quantity Type</Form.Label>
-                                 <Form.Control
-                                    name="quantityType"
-                                    type="text"
-                                    defaultValue={ingredient.quantityType}
-                                    ref={quantityTypeRef}
-                                 />
-                              </Form.Group>
-                           </Col>
-                        </Row>
+                        <Col xs={6} md={4}>
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>
+                                 Quantity Type
+                                 {formik.touched.quantityType && formik.errors.quantityType ? (
+                                    <span className="star-error">{formik.errors.quantityType}</span>
+                                 ) : null}
+                              </Form.Label>
+                              <Form.Control
+                                 name="quantityType"
+                                 type="text"
+                                 value={formik.values.quantityType}
+                                 onChange={formik.handleChange}
+                                 onBlur={formik.handleBlur}
+                              />
+                           </Form.Group>
+                        </Col>
+                     </Row>
 
-                        <Row>
-                           <Modal.Footer>
-                              <Button type="submit" variant="success">
-                                 Update
-                              </Button>
-                              <Button
-                                 onClick={() => handleDeleteIngredient(ingredient.id)}
-                                 variant="danger"
-                              >
-                                 Delete
-                              </Button>
-                           </Modal.Footer>
-                        </Row>
-                     </Form>
-                  </Container>
-               </Modal.Body>
-            </Modal>
-         )
+                     <Row>
+                        <Modal.Footer>
+                           <Button type="submit" variant="success" disabled={!formik.isValid}>
+                              Update
+                           </Button>
+                           <Button
+                              variant="danger"
+                              onClick={() => handleDeleteIngredient(ingredient.id)}
+                           >
+                              Delete
+                           </Button>
+                        </Modal.Footer>
+                     </Row>
+                  </Form>
+               </Container>
+            </Modal.Body>
+         </Modal>
       );
    }
-
    return (
-      <>
+      <Container>
          <table className="table table-striped table-hover">
             <thead>
                <tr>
@@ -230,15 +258,17 @@ export default function IngredientList() {
             </thead>
             <tbody>{renderIngredients()}</tbody>
          </table>
-
-         {/* Modal box */}
          {
             <>
                <Link to="/ingredients/create">Add Ingredient</Link>
 
-               <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
+               <MyVerticallyCenteredModal
+                  ingredient={ingredient}
+                  show={modalShow}
+                  onHide={() => setModalShow(false)}
+               />
             </>
          }
-      </>
+      </Container>
    );
 }
