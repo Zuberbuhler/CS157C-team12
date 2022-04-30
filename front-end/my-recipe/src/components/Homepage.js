@@ -1,40 +1,57 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Card, Button, Row, Col, Container, Badge } from "react-bootstrap";
 const axios = require("axios").default;
 
-const REGISTER_URL = "http://localhost:8080/api/users";
+const URL = "http://localhost:8080/api/users";
 
 const Homepage = () => {
-   let navigate = useNavigate();
+   const [posts, setPosts] = useState([]);
 
-   const [postResponse, setPostResponse] = useState("Test");
+   useEffect(() => {
+      loadPosts();
+      console.log(posts);
+   }, []);
 
-   useEffect(() => {});
+   // load all posts
+   const loadPosts = async () => {
+      const result = await axios.get(`${URL}/posts`);
+      setPosts(result.data);
+      console.log(result);
+   };
 
-   const logout = () => {
-      navigate("/");
-      localStorage.clear();
+   const renderPosts = () => {
+      return posts.map((post) => (
+         <Col key={post.id}>
+            <Card className="mt-1 mb-1" style={{ width: "15rem" }}>
+               <Card.Img variant="top" src={post.imgUrl} />
+               <Card.Body>
+                  <Card.Title style={{ fontSize: "16px" }}>
+                     {post.title.substring(0, 150) + "..."}
+                  </Card.Title>
+                  {/* <Card.Text>{post.content.substring(0, 150) + "..."}</Card.Text> */}
+                  {/* <Button variant="outline-secondary">View More</Button> */}
+                  <Link to={`./posts/${post.id}`}>
+                     <Badge
+                        pill
+                        bg="light"
+                        text="primary"
+                        style={{ fontSize: "14px", fontWeight: "normal" }}
+                     >
+                        View More...
+                     </Badge>
+                  </Link>
+               </Card.Body>
+            </Card>
+         </Col>
+      ));
    };
 
    return (
-      <div>
-         <ul>
-            <Link to="/ingredient">
-               <li>Ingredient</li>
-            </Link>
-            <Link to="/recipe">
-               <li>Recipe</li>
-            </Link>
-            <Link to="/ingredients">
-               <li>Ingredients</li>
-            </Link>
-         </ul>
-         <p>{postResponse}</p>
-         <button className="button" onClick={logout}>
-            Logout
-         </button>
-      </div>
+      <Container>
+         <Row className="mt-5">{renderPosts()}</Row>
+      </Container>
    );
 };
 
