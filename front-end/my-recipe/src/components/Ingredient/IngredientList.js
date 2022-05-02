@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import moment from "moment";
 
 export default function IngredientList() {
    const URL = "http://localhost:8080/api/users/";
@@ -16,7 +17,6 @@ export default function IngredientList() {
 
    useEffect(() => {
       loadIngredients();
-      console.log(ingredients);
    }, []);
 
    // load all ingredients
@@ -77,7 +77,7 @@ export default function IngredientList() {
             <th scope="row">{i + 1}</th>
             <td>{ingredient.ingredientName}</td>
             <td>{ingredient.quantity}</td>
-            <td>{ingredient.expiration}</td>
+            <td>{moment(ingredient.expiration).format("MM/DD/yyyy")}</td>
          </tr>
       ));
    };
@@ -101,14 +101,14 @@ export default function IngredientList() {
          initialValues: {
             id: ingredient.id,
             ingredientName: ingredient.ingredientName,
-            expiration: ingredient.expiration,
+            expiration: moment(ingredient.expiration).format("YYYY-MM-DD"),
             par: ingredient.par,
             quantity: ingredient.quantity,
             quantityType: ingredient.quantityType,
          },
          validationSchema: Yup.object({
             ingredientName: Yup.string().required("*"),
-            expiration: Yup.string().required("*"),
+            expiration: Yup.date().required("*"),
             par: Yup.number().min(1, " > 0").required("*"),
             quantity: Yup.number().min(1, " > 0").required("*"),
             quantityType: Yup.string().required("*"),
@@ -117,7 +117,7 @@ export default function IngredientList() {
             handleUpdateIngredient(ingredient);
          },
       });
-      
+
       return (
          <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
@@ -158,9 +158,8 @@ export default function IngredientList() {
                               </Form.Label>
                               <Form.Control
                                  name="expiration"
-                                 type="text"
-                                 value={formik.values.expiration}
-                                 readOnly
+                                 type="date"
+                                 value={moment(formik.values.expiration).format("YYYY-MM-DD")}
                                  onChange={formik.handleChange}
                                  onBlur={formik.handleBlur}
                               />
