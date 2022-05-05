@@ -77,6 +77,7 @@ export default function IngredientList() {
             <th scope="row">{i + 1}</th>
             <td>{ingredient.ingredientName}</td>
             <td>{ingredient.quantity}</td>
+            <td>{ingredient.par}</td>
             <td>{ingredient.expiration}</td>
          </tr>
       ));
@@ -245,6 +246,7 @@ export default function IngredientList() {
          </Modal>
       );
    }
+   
    return (
       <Container>
          <table className="table table-striped table-hover">
@@ -253,6 +255,7 @@ export default function IngredientList() {
                   <th scope="col">#</th>
                   <th scope="col">Ingredient Name</th>
                   <th scope="col">Quantity</th>
+                  <th scope="col">Par</th>
                   <th scope="col">Expiration</th>
                </tr>
             </thead>

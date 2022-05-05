@@ -165,7 +165,7 @@ const Register = () => {
                            onFocus={() => setPwdFocus(true)}
                            onBlur={() => setPwdFocus(false)}
                         ></Form.Control>
-                        <p className={"offscreen"}>
+                        <p className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                            <FontAwesomeIcon icon={faInfoCircle} />
                            8 to 24 characters.
                            <br />

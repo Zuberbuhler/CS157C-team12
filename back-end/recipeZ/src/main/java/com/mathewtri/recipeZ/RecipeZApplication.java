@@ -24,10 +24,12 @@ public class RecipeZApplication {
 
 			// create users
 			User user1 = new User("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", "trido@gmail.com", "Haha1234@");
-			User user2 = new User("56bf2944-b674-43d6-88aa-b1b453c9556e", "mathew@microsoft.com", "Haha1234@");
+			User user2 = new User("56bf2944-b674-43d6-88aa-b1b453c9556e", "matthew@microsoft.com", "Haha1234@");
+			User user3 = new User("56bf2944-b674-43d6-88aa-b1b453c95565", "zuber@microsoft.com", "Haha1234@");
 
 			userService.createUser(user1);
 			userService.createUser(user2);
+			userService.createUser(user3);
 
 			// create ingredients
 			Ingredient ingredient1 = new Ingredient("3b20bfe9-3b5d-4caf-8b94-901085b197ab", "Pepper", "03/11/2023", 1, 4, "pound");

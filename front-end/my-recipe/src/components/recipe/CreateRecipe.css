@@ -1,0 +1,30 @@
+.form-label > .alert-danger{
+   background-color: transparent !important;
+}
+
+.form-label > .alert{
+   border: none !important;
+   margin: 0;
+   padding: 0;
+}
+
+.star-error{
+   color: red;
+}
+
+.recipe_ingredient {
+   display: flex;
+}
+
+.table {
+   flex: 1;
+   margin: 1rem;
+}
+
+.addIngredToRecipeSpan {
+   margin: auto 0;
+}
+
+.quantityColumn {
+   width: auto;
+}
