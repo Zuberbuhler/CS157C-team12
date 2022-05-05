@@ -42,6 +42,7 @@ export default function RecipeCreate() {
     const handleIngredientListItemClick = (ingredient) => {
       const ingredientRemovedList = ingredients.filter(_ingredient => _ingredient.ingredientName !== ingredient.ingredientName);
       setIngredients(ingredientRemovedList);
+      ingredient.quantity = 1;
       setNewRecipeIngredients(prevIngredients => [...prevIngredients, ingredient]);
      };
 
@@ -185,6 +186,7 @@ export default function RecipeCreate() {
                      </Form.Label>
                      <Form.Control
                         type="text"
+                        as="textarea"
                         name="recipe_content"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

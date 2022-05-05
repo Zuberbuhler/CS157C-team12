@@ -60,6 +60,7 @@ const VerticallyCenteredModal = ({recipe, onUpdate, onDelete, show, onHide}) => 
     const handleIngredientListItemClick = (ingredient) => {
        const ingredientRemovedList = ingredients.filter(_ingredient => _ingredient.ingredientName !== ingredient.ingredientName);
        setIngredients(ingredientRemovedList);
+       ingredient.quantity = 1;
        setRecipeIngredients(prevIngredients => [...prevIngredients, ingredient]);
     };
 
@@ -157,7 +158,7 @@ const VerticallyCenteredModal = ({recipe, onUpdate, onDelete, show, onHide}) => 
                       </Col>
                    </Row>
                    <Row>
-                      <Col xs={5} md={8}>
+                      <Col xs={5} md={12}>
                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>
                                Recipe Image URL
@@ -177,7 +178,7 @@ const VerticallyCenteredModal = ({recipe, onUpdate, onDelete, show, onHide}) => 
                    </Row>
 
                    <Row>
-                      <Col xs={6} md={4}>
+                      <Col xs={6} md={12}>
                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>
                                Recipe Content
@@ -188,6 +189,7 @@ const VerticallyCenteredModal = ({recipe, onUpdate, onDelete, show, onHide}) => 
                             <Form.Control
                                name="recipe_content"
                                type="text"
+                               as="textarea"
                                value={formik.values.recipe_content}
                                onChange={formik.handleChange}
                                onBlur={formik.handleBlur}
