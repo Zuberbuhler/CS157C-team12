@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./IngredientCreate.css";
-
+import moment from "moment"
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
@@ -11,16 +11,17 @@ export default function IngredientCreate() {
    const formik = useFormik({
       initialValues: {
          ingredientName: "",
-         expiration: "",
+         expiration: moment(new Date()).format("YYYY-MM-DD"),
+
          par: "",
          quantity: "",
          quantityType: "",
       },
       validationSchema: Yup.object({
          ingredientName: Yup.string().required("*"),
-         expiration: Yup.string().required("*"),
+         expiration: Yup.date().required("*"),
          par: Yup.number().min(1, "> 0").required("*"),
-         quantity: Yup.number().min(1, "(> 0)").required("*"),
+         quantity: Yup.number().min(0, "(>= 0)").required("*"),
          quantityType: Yup.string().required("*"),
       }),
       onSubmit: (ingredient) => {
@@ -77,11 +78,11 @@ export default function IngredientCreate() {
                         ) : null}
                      </Form.Label>
                      <Form.Control
-                        type="text"
+                        type="date"
                         name="expiration"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.expiration}
+                        value={moment(formik.values.expiration).format("YYYY-MM-DD")}
                      />
                   </Form.Group>
                </Col>

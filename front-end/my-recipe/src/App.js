@@ -12,6 +12,7 @@ import PostList from "./components/post/PostList";
 import PostCreate from "./components/post/PostCreate";
 import PostDetail from "./components/post/PostDetail";
 import IngredientNamesList from "./components/recipe/IngredientNamesList.js"
+import ShoppingList from "./components/shoppingList/ShoppingList";
 function App() {
    const navigate = useNavigate();
    const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
@@ -78,6 +79,15 @@ function App() {
             }
          />
          <Route
+            path="/shopping"
+            element={
+               <>
+                  <_Navbar />
+                  <ShoppingList />
+               </>
+            }
+         />
+         <Route
             path="/recipes/create"
             element={
                <>
@@ -104,7 +114,6 @@ function App() {
                </>
             }
          />
-
          <Route
             path="/posts"
             element={

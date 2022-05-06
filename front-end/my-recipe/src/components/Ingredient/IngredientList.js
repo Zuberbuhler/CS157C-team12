@@ -5,6 +5,7 @@ import axios from "axios";
 import "./IngredientList.css";
 import { Link } from "react-router-dom";
 
+import moment from "moment";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
@@ -77,8 +78,9 @@ export default function IngredientList() {
             <th scope="row">{i + 1}</th>
             <td>{ingredient.ingredientName}</td>
             <td>{ingredient.quantity}</td>
+            <td>{ingredient.quantityType}</td>
             <td>{ingredient.par}</td>
-            <td>{ingredient.expiration}</td>
+            <td>{moment(ingredient.expiration).format("MM/DD/yyyy")}</td>
          </tr>
       ));
    };
@@ -102,16 +104,16 @@ export default function IngredientList() {
          initialValues: {
             id: ingredient.id,
             ingredientName: ingredient.ingredientName,
-            expiration: ingredient.expiration,
+            expiration: moment(ingredient.expiration).format("YYYY-MM-DD"),
             par: ingredient.par,
             quantity: ingredient.quantity,
             quantityType: ingredient.quantityType,
          },
          validationSchema: Yup.object({
             ingredientName: Yup.string().required("*"),
-            expiration: Yup.string().required("*"),
+            expiration: Yup.date().required("*"),
             par: Yup.number().min(1, " > 0").required("*"),
-            quantity: Yup.number().min(1, " > 0").required("*"),
+            quantity: Yup.number().min(0, " >= 0").required("*"),
             quantityType: Yup.string().required("*"),
          }),
          onSubmit: (ingredient) => {
@@ -159,9 +161,8 @@ export default function IngredientList() {
                               </Form.Label>
                               <Form.Control
                                  name="expiration"
-                                 type="text"
-                                 value={formik.values.expiration}
-                                 readOnly
+                                 type="date"
+                                 value={moment(formik.values.expiration).format("YYYY-MM-DD")}
                                  onChange={formik.handleChange}
                                  onBlur={formik.handleBlur}
                               />
@@ -200,7 +201,7 @@ export default function IngredientList() {
                               <Form.Control
                                  name="quantity"
                                  type="number"
-                                 min={1}
+                                 min={0}
                                  value={formik.values.quantity}
                                  onChange={formik.handleChange}
                                  onBlur={formik.handleBlur}
@@ -255,6 +256,7 @@ export default function IngredientList() {
                   <th scope="col">#</th>
                   <th scope="col">Ingredient Name</th>
                   <th scope="col">Quantity</th>
+                  <th scope="col">Quantity Type</th>
                   <th scope="col">Par</th>
                   <th scope="col">Expiration</th>
                </tr>

@@ -25,6 +25,9 @@ export default function _Navbar() {
                <Nav.Link as={Link} to="/recipes">
                   Recipe
                </Nav.Link>
+               <Nav.Link as={Link} to="/shopping">
+                  Shopping
+               </Nav.Link>
                <Nav.Link as={Link} to="/posts">
                   Post
                </Nav.Link>

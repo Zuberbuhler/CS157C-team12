@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Form, Row, Col, Card } from "react-bootstrap";
+import logo from './logo.png';
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -93,6 +94,11 @@ const SignIn = () => {
 
    return (
       <div className="myform">
+         <div className="top">
+         <img className="img" src={logo} alt="Logo" style={{width: "20em"}}/>
+      
+         </div>
+         <div className="bottom">
          <Card
             className=" shadow-sm border-0 px-3 rounded-2 mb-3 py-4 mx-auto bg-light"
             style={{ width: "30rem" }}
@@ -190,6 +196,8 @@ const SignIn = () => {
                </span>
             </p>
          </Card>
+         </div>
+
       </div>
    );
 };

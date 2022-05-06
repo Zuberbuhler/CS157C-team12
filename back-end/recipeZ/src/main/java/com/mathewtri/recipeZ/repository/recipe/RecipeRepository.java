@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public class RecipeRepository implements IRecipeRepository{
-
     private final RedisTemplate redisTemplate;
     private final String KEY = "RECIPE";
 

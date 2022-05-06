@@ -25,7 +25,7 @@ const Homepage = () => {
       return posts.map((post) => (
          <Col key={post.id}>
             <Card className="mt-1 mb-1" style={{ width: "15rem" }}>
-               <Card.Img variant="top" src={post.imgUrl} />
+               <Card.Img variant="top" src={post.imgUrl} style={{height: "10em", objectFit: "cover"}} />
                <Card.Body>
                   <Card.Title style={{ fontSize: "16px" }}>
                      {post.title.substring(0, 150) + "..."}
