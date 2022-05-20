@@ -23,13 +23,11 @@ public class RecipeZApplication {
 		return args -> {
 
 			// create users
-			User user1 = new User("9461f4b4-f9e1-4729-ae08-f292eaa8d4a6", "trido@gmail.com", "Haha1234@");
-			User user2 = new User("56bf2944-b674-43d6-88aa-b1b453c9556e", "matthew@microsoft.com", "Haha1234@");
-			User user3 = new User("56bf2944-b674-43d6-88aa-b1b453c95565", "zuber@microsoft.com", "Haha1234@");
+			User user1 = new User("56bf2944-b674-43d6-88aa-b1b453c95565", "user1@email.com", "Password1!");
+			User user2 = new User("56bf2944-b674-43d6-88aa-b1b453c95565", "user2@email.com", "Password1!");
 
 			userService.createUser(user1);
 			userService.createUser(user2);
-			userService.createUser(user3);
 
 			// create ingredients
 			Ingredient ingredient1 = new Ingredient("3b20bfe9-3b5d-4caf-8b94-901085b197ab", "Pepper", "03/11/2023", 1, 4, "pound");
@@ -37,14 +35,12 @@ public class RecipeZApplication {
 			Ingredient ingredient3 = new Ingredient("8a6966d2-e535-4330-b9e8-a8a56dba019a", "Salt", "12/06/2021", 7, 8, "ml");
 			Ingredient ingredient4 = new Ingredient("d4d76adc-c0f7-4df3-a50a-eb6f231aed1f", "Orion", "12/01/2021", 10, 12, "each");
 			Ingredient ingredient5 = new Ingredient("ef794469-74df-4227-8db1-14e755eb4618", "Chicken", "08/05/2021", 1, 12, "each");
-			Ingredient ingredient6 = new Ingredient("a8a90cec-6fda-4410-ba71-eaa7c3436c5d", "Pork", "02/01/2019", 2, 3, "pound");
 
 			ingredientService.createIngredient(user1.getId(), ingredient1);
 			ingredientService.createIngredient(user1.getId(), ingredient2);
 			ingredientService.createIngredient(user1.getId(), ingredient3);
 			ingredientService.createIngredient(user1.getId(), ingredient4);
 			ingredientService.createIngredient(user1.getId(), ingredient5);
-			ingredientService.createIngredient(user2.getId(), ingredient6);
 
 			// create posts
 			Post post1 = new Post("How to cook popcorn chicken", "Here is ingredient you need to prepare", "https://media.istockphoto.com/photos/homemade-crispy-popcorn-chicken-picture-id470177926?b=1&k=20&m=470177926&s=170667a&w=0&h=rEt_L7ohZ1RIG5EEW4THVExBoAClkfXWBl7SvvkFlJc=");
@@ -54,7 +50,6 @@ public class RecipeZApplication {
 			postService.createPost(user1.getId(), post1);
 			postService.createPost(user1.getId(), post2);
 			postService.createPost(user1.getId(), post3);
-			postService.createPost(user2.getId(), post4);
 		};
 	}
 }
