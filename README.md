@@ -18,7 +18,7 @@ The course covers NoSQL databases and this teams final project will be a Invento
 
 ## Video Walkthough
 
-<image src='./resources/demo.gif' title='RecipeZ App Demo' alt='RecipeZ Video Demo' />
+<image src='./demo.gif' title='RecipeZ App Demo' alt='RecipeZ Video Demo' />
 
 ## Technologies Used:
 - Front End
